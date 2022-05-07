@@ -9,7 +9,7 @@ const main = add('main', 'main');
 const title = add('h1', 'keyboard__title');
 title.innerHTML = 'RSS Virtual Mac Keyboard';
 const description = add('h3', 'keyboard__description');
-description.innerHTML = 'If you want to change layout use "Command" + "Space"';
+description.innerHTML = 'If you want to change the input language use "Command" + "Space"';
 main.appendChild(title);
 main.appendChild(description);
 
@@ -22,6 +22,9 @@ export default class Keyboard {
 
   init(langSelected) {
     this.textarea = add('textarea', 'keyboard__text');
+    this.textarea.setAttribute('placeholder', 'Please type something on keyboard');
+    this.textarea.setAttribute('rows', '7');
+    this.textarea.setAttribute('cols', '133');
     main.appendChild(this.textarea);
 
     this.selectedLayout = language[langSelected];

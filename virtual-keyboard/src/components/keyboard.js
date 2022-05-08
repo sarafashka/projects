@@ -7,10 +7,12 @@ import Key from './key.js';
 const main = add('main', 'main');
 const title = add('h1', 'keyboard__title');
 title.innerHTML = 'RSS Virtual Mac Keyboard';
-const description = add('h3', 'keyboard__description');
-description.innerHTML = 'If you want to change the input language use "control" + "left option"(for Win OS + "left alt")';
+const description = add('div', 'keyboard__description');
+description.innerHTML = `<p>If you want to change language press <span> control + left option </span>
+<p>(for Win <span> control + left alt </span>)</p>
+<p>There is no key "delete" on Mac keyboard, but if you want to try it's functional - use <span> right option </span></p>
+<p>(for Win <span> right alt </span>)</p>`;
 main.appendChild(title);
-main.appendChild(description);
 
 export default class Keyboard {
   constructor(layout) {
@@ -29,6 +31,7 @@ export default class Keyboard {
     this.containerKeyboard = add('div', 'keyboard');
     this.containerKeyboard.dataset.lang = langSelected;
     main.appendChild(this.containerKeyboard);
+    main.appendChild(description);
     document.body.prepend(main);
     return this;
   }
@@ -63,9 +66,16 @@ export default class Keyboard {
   clickButton = (e) => {
     e.stopPropagation();
     const keyContainer = e.target.closest('.key');
+    if (!keyContainer) return;
+    keyContainer.addEventListener('mouseleave', this.cleanButton);
     const code = keyContainer.dataset.code;
     const button = {code: code, type: e.type};
     this.pressButton(button);
+  }
+
+  cleanButton = (e) => {
+    e.target.classList.remove('press');
+    e.target.removeEventListener('mouseleave', this.cleanButton);
   }
 
   pressButton = (e) => {
@@ -78,10 +88,10 @@ export default class Keyboard {
 
 
     if (e.type === 'keydown' || e.type === 'mousedown') {
-      //e.preventDefault();
       button.keyContainer.classList.add('press');
       if (e.code === 'CapsLock') { 
         this.isCaps = this.isCaps === false ? true : false;
+        this.UpperCase();
       }
       if (e.code === 'ControlLeft') { 
         this.cntrPressed = true;
@@ -91,6 +101,7 @@ export default class Keyboard {
       }
       if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') { 
         this.shiftPressed = true;
+        this.UpperCase();
       }
 
       if (e.type === 'keydown') {
@@ -112,7 +123,6 @@ export default class Keyboard {
     }
 
     if (e.type === 'keyup' || e.type === 'mouseup') {
-    //  e.preventDefault();
       button.keyContainer.classList.remove('press');
 
       if (e.code === 'ControlLeft') { 
@@ -123,8 +133,76 @@ export default class Keyboard {
       }
       if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') { 
         this.shiftPressed = false;
+        this.UpperCase();
       }
     }
+  }
+
+  UpperCase () {
+    this.keyButtons.find((button) => {
+      if (this.isCaps && !this.shiftPressed) {
+        if (button.low && button.low.toUpperCase() === button.upper) {
+          button.char.innerHTML = button.low.toUpperCase();
+        }
+        if (button.code === 'CapsLock') {
+        button.keyContainer.classList.add('uppercase') 
+        }
+        if (button.code === 'ShiftLeft') {
+          button.keyContainer.classList.remove('uppercase') 
+        }
+        if (button.low && button.upper && button.upper === button.low.toUpperCase()) {
+          button.charUpperCase.innerHTML = "";
+        }
+        if (button.low && button.upper && button.upper !== button.low.toUpperCase()) {
+          button.char.innerHTML = button.low;
+          button.charUpperCase.innerHTML = button.upper;
+        }
+
+      } else if (!this.isCaps && !this.shiftPressed) {
+        if (button.low) {
+          button.char.innerHTML = button.low;
+        }
+        if (button.code === 'CapsLock') {
+        button.keyContainer.classList.remove('uppercase') 
+        }
+        if (button.code === 'ShiftLeft') {
+          button.keyContainer.classList.remove('uppercase') 
+          }
+        if (button.low && button.upper && button.upper === button.low.toUpperCase()) {
+          button.charUpperCase.innerHTML = "";
+        }
+        if (button.low && button.upper && button.upper !== button.low.toUpperCase()) {
+          button.charUpperCase.innerHTML = button.upper;
+        }
+
+      } else if (!this.isCaps && this.shiftPressed) {
+        if (button.low && button.upper && button.upper !== button.low.toUpperCase()) {
+          button.char.innerHTML = button.upper;
+          button.charUpperCase.innerHTML = button.low;
+        }
+        if (button.low && button.upper && button.upper === button.low.toUpperCase()) {
+          button.char.innerHTML = button.upper;
+        }
+        if (button.code === 'ShiftLeft') {
+        button.keyContainer.classList.add('uppercase') 
+        }
+
+      } else if (this.isCaps && this.shiftPressed) {
+        if (button.low) {
+          button.char.innerHTML = button.low;
+        }
+        if (button.code === 'CapsLock') {
+        button.keyContainer.classList.add('uppercase') 
+        }
+        if (button.code === 'ShiftLeft') {
+          button.keyContainer.classList.add('uppercase') 
+          }
+        if (button.low && button.upper && button.upper !== button.low.toUpperCase()) {
+          button.char.innerHTML = button.upper;
+          button.charUpperCase.innerHTML = button.low;
+        }
+      }
+    });
   }
 
   changeLanguage() {
@@ -132,6 +210,7 @@ export default class Keyboard {
     set('keyboardLang', this.containerKeyboard.dataset.lang);
 
     this.render(this.containerKeyboard.dataset.lang);
+    this.UpperCase();
   }
 
   print(symbol, button) {
@@ -175,6 +254,5 @@ export default class Keyboard {
       }
     this.textarea.setSelectionRange(cursor, cursor);
   }
-
 
 }

@@ -1,7 +1,12 @@
 @font-face {
   font-family: SF;
-  src: url(../assets/fonts/sf-compact/sf-compact.otf);
+  src: url(/virtual-keyboard/assets/fonts/sf-compact/sf-compact.otf);
   font-weight: 400;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
@@ -12,7 +17,8 @@ body {
 }
 
 .main {
-  width: 1200px;
+  width: 100vw;
+  height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -23,6 +29,9 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
 .keyboard__text {
@@ -54,6 +63,7 @@ body {
 }
 
 .keyboard__row {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -79,6 +89,7 @@ body {
   border: 2px rgba(0, 0, 0, 0.6) solid;
   border-radius: 6px;
   color: rgba(0, 0, 0, 0.6);
+  padding: 11px;
   -webkit-box-shadow: inset 0px 3px 1px #FFFFFF;
           box-shadow: inset 0px 3px 1px #FFFFFF;
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#FFFFFF)), #E7E7E7;
@@ -105,13 +116,27 @@ body {
 .key__function {
   font-size: 14px;
   line-height: 17px;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
 }
 
 .Tab, .CapsLock, .ShiftLeft {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: start;
-  padding-left: 11px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Backspace, .Enter, .ShiftRight {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .Backspace, .Tab {
@@ -132,10 +157,33 @@ body {
 
 .Space {
   width: 342px;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 .ArrowLeft, .ArrowRight, .ArrowUp, .ArrowDown {
   height: 29px;
   font-size: 14px;
+  padding: 5px;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  margin-top: 30px;
+}
+
+.ArrowUp {
+  position: relative;
+  top: -30px;
+  left: 70px;
+}
+
+.ArrowLeft {
+  position: absolute;
+  left: 805px;
+}
+
+.ArrowLeft .key__char {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 /*# sourceMappingURL=style.css.map */

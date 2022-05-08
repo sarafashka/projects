@@ -23,7 +23,7 @@ export default class Keyboard {
     this.textarea = add('textarea', 'keyboard__text');
     this.textarea.setAttribute('placeholder', 'Please type something on keyboard');
     this.textarea.setAttribute('rows', '7');
-    this.textarea.setAttribute('cols', '133');
+    this.textarea.setAttribute('cols', '131');
     main.appendChild(this.textarea);
 
     this.containerKeyboard = add('div', 'keyboard');
@@ -56,28 +56,63 @@ export default class Keyboard {
     });
     document.addEventListener('keydown', this.pressButton);
     document.addEventListener('keyup', this.pressButton);
+    this.containerKeyboard.addEventListener('mousedown', this.clickButton);
+    this.containerKeyboard.addEventListener('mouseup', this.clickButton);
+  }
+
+  clickButton = (e) => {
+    e.stopPropagation();
+    const keyContainer = e.target.closest('.key');
+    const code = keyContainer.dataset.code;
+    const button = {code: code, type: e.type};
+    this.pressButton(button);
   }
 
   pressButton = (e) => {
+    if (e.stopPropagation) e.stopPropagation();
+    if (e.preventDefault) e.preventDefault();
+
     this.textarea.focus();
 
     const button = this.keyButtons.find((el) => el.code === e.code);
 
 
-    if (e.type === 'keydown') {
-       e.preventDefault();
-       button.keyContainer.classList.add('press');
-
+    if (e.type === 'keydown' || e.type === 'mousedown') {
+      //e.preventDefault();
+      button.keyContainer.classList.add('press');
+      if (e.code === 'CapsLock') { 
+        this.isCaps = this.isCaps === false ? true : false;
+      }
       if (e.code === 'ControlLeft') { 
         this.cntrPressed = true;
       }
       if (e.code === 'AltLeft') { 
         this.altPressed = true;
       }
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') { 
+        this.shiftPressed = true;
+      }
+
+      if (e.type === 'keydown') {
+        if (e.code === 'ControlLeft' && this.altPressed) {
+          this.changeLanguage();
+        }
+        if (e.code === 'AltLeft' && this.cntrPressed) {
+          this.changeLanguage()
+        }
+      }
+
+      let symbol = button.low;
+      if (this.shiftPressed) {
+        symbol = this.isCaps ? button.upper.toLowerCase(): button.upper;
+      } else {
+        symbol = this.isCaps ? button.low.toUpperCase() : button.low; 
+      }
+      this.print(symbol, button);
     }
 
-    if (e.type === 'keyup') {
-      e.preventDefault();
+    if (e.type === 'keyup' || e.type === 'mouseup') {
+    //  e.preventDefault();
       button.keyContainer.classList.remove('press');
 
       if (e.code === 'ControlLeft') { 
@@ -86,14 +121,8 @@ export default class Keyboard {
       if (e.code === 'AltLeft') { 
         this.altPressed = false;
       }
-    }
-
-    if (e.type === 'keydown') {
-      if (e.code === 'ControlLeft' && this.altPressed) {
-        this.changeLanguage();
-      }
-      if (e.code === 'AltLeft' && this.cntrPressed) {
-        this.changeLanguage()
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') { 
+        this.shiftPressed = false;
       }
     }
   }
@@ -104,4 +133,48 @@ export default class Keyboard {
 
     this.render(this.containerKeyboard.dataset.lang);
   }
+
+  print(symbol, button) {
+    let cursor = this.textarea.selectionStart;
+    const left = this.textarea.value.slice(0, cursor);
+    const right = this.textarea.value.slice(cursor);
+
+    if (!button.isFunction) {
+      cursor ++;
+      this.textarea.value = `${left}${symbol}${right}`;
+
+    } else if (button.code === 'Space') {
+        this.textarea.value = `${left} ${right}`;
+        cursor ++;
+      }
+      else if (button.code === 'Enter') {
+        this.textarea.value = `${left}\n${right}`;
+        cursor ++;
+      }
+      else if (button.code === 'Tab') {
+        this.textarea.value = `${left}\t${right}`;
+        cursor ++;
+      }
+      else if (button.code === 'Backspace') {
+        this.textarea.value = `${left.slice(0, -1)}${right}`;
+      }
+      else if (button.code === 'AltRight') {
+        this.textarea.value = `${left}${right.slice(1)}`;
+      }
+      else if (button.code === 'ArrowRight') {
+        cursor ++;
+      }
+      else if (button.code === 'ArrowLeft') {
+        cursor > 0 ? cursor -- : cursor = 0;
+      }
+      else if (button.code === 'ArrowUp') {
+        cursor = this.textarea.value.slice(0, cursor).lastIndexOf('\n');
+      }
+      else if (button.code === 'ArrowDown') {
+        cursor = this.textarea.value.indexOf('\n', cursor) + 1;
+      }
+    this.textarea.setSelectionRange(cursor, cursor);
+  }
+
+
 }

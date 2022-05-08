@@ -79,7 +79,7 @@ export default {
       isFunction: false,
     },
     {
-      low: 'delete',
+      low: 'backspace',
       upper: null,
       code: 'Backspace',
       isFunction: true,
@@ -253,6 +253,12 @@ export default {
       isFunction: true,
     },
     {
+      low: '`',
+      upper: '~',
+      code: 'IntlBackslash',
+      isFunction: false,
+    },
+    {
       low: 'z',
       upper: 'Z',
       code: 'KeyZ',
@@ -355,7 +361,7 @@ export default {
       isFunction: true,
     },
     {
-      low: '&#9668;',
+      low: '&#9658;',
       upper: null,
       code: 'ArrowLeft',
       isFunction: true,
@@ -459,7 +465,7 @@ export default {
       isFunction: false,
     },
     {
-      low: 'delete',
+      low: 'backspace',
       upper: null,
       code: 'Backspace',
       isFunction: true,
@@ -633,6 +639,12 @@ export default {
       isFunction: true,
     },
     {
+      low: ']',
+      upper: '[',
+      code: 'IntlBackslash',
+      isFunction: false,
+    },
+    {
       low: 'я',
       upper: 'Я',
       code: 'KeyZ',
@@ -735,7 +747,7 @@ export default {
       isFunction: true,
     },
     {
-      low: '&#9668;',
+      low: '&#9658;',
       upper: null,
       code: 'ArrowLeft',
       isFunction: true,

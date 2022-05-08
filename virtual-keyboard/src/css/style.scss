@@ -1,9 +1,11 @@
 @font-face {
   font-family: SF;
-  src: url(../assets/fonts/sf-compact/sf-compact.otf);
+  src: url(/virtual-keyboard/assets/fonts/sf-compact/sf-compact.otf);
   font-weight: 400;
 }
-
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: SF;
   font-size: 22px;
@@ -11,10 +13,12 @@ body {
   line-height: 100%;
 }
 .main {
-  width: 1200px;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
 }
 .keyboard__text {
   font-family: SF;
@@ -36,6 +40,7 @@ body {
   border-radius: 12px;
 }
 .keyboard__row {
+  position: relative;
   display: flex;
   gap: 8px;
 } 
@@ -49,6 +54,7 @@ body {
   border: 2px rgba(0, 0, 0, 0.6) solid;
   border-radius: 6px;
   color: rgba(0, 0, 0, 0.6);
+  padding: 11px;
   box-shadow: inset 0px 3px 1px #FFFFFF;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%), #E7E7E7;
   cursor: pointer;
@@ -67,10 +73,15 @@ body {
 .key__function {
   font-size: 14px;
   line-height: 17px;
+  justify-content: end;
 }
 .Tab, .CapsLock, .ShiftLeft {
   align-items: start;
-  padding-left: 11px;
+  justify-content: center;
+}
+.Backspace, .Enter, .ShiftRight {
+  align-items: flex-end;
+  justify-content: center;
 }
 .Backspace, .Tab {
   width: 97px;
@@ -86,8 +97,25 @@ body {
 }
 .Space {
   width: 342px;
+  flex-grow: 1;
 }
 .ArrowLeft, .ArrowRight, .ArrowUp, .ArrowDown {
   height: 29px;
   font-size: 14px;
+  padding: 5px;
+  justify-self: center;
+  margin-top: 30px;
+}
+.ArrowUp {
+  position: relative;
+  top: -30px;
+  left: 70px;
+}
+.ArrowLeft {
+  position: absolute;
+  left: 805px;
+  .key__char {
+    transform: rotate(180deg);
+  }
+  
 }

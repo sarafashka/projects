@@ -14,13 +14,17 @@ export default class Key {
     this.char.innerHTML = this.low;
 
     this.charUpperCase = add('div', 'key__char_upper-case');
-    if (upper) {
+    if (upper && this.low.toUpperCase() !== this.upper) {
       this.charUpperCase.innerHTML = this.upper;
     }
 
-    this.key = add('div', 'key');
-    this.key.appendChild(this.char);
-    this.key.appendChild(this.charUpperCase);
-    this.key.dataset.code = this.code;
+    this.keyContainer = add('div', 'key');
+    this.keyContainer.appendChild(this.char);
+    this.keyContainer.appendChild(this.charUpperCase);
+    this.keyContainer.dataset.code = this.code;
+    if (this.isFunction === true) {
+      this.keyContainer.classList.add(this.code);
+      this.keyContainer.classList.add('key__function');
+    }
   }
 }

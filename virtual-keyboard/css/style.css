@@ -66,6 +66,10 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -80,17 +84,58 @@ body {
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#FFFFFF)), #E7E7E7;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%), #E7E7E7;
   cursor: pointer;
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 .key .key__char_upper-case {
-  display: none;
+  font-size: 16px;
 }
 
 .press {
   background: linear-gradient(214.02deg, #B75CFF 6.04%, #671AE4 92.95%);
   -webkit-box-shadow: 0px 0px 0px;
           box-shadow: 0px 0px 0px;
+  -webkit-transition: 1s ease-out;
+  transition: 1s ease-out;
   -webkit-transform: scale(0.95);
           transform: scale(0.95);
+}
+
+.key__function {
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.Tab, .CapsLock, .ShiftLeft {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  padding-left: 11px;
+}
+
+.Backspace, .Tab {
+  width: 97px;
+}
+
+.CapsLock, .Enter {
+  width: 114px;
+}
+
+.ShiftLeft, .ShiftRight {
+  width: 149px;
+}
+
+.MetaLeft, .MetaRight {
+  width: 79px;
+}
+
+.Space {
+  width: 342px;
+}
+
+.ArrowLeft, .ArrowRight, .ArrowUp, .ArrowDown {
+  height: 29px;
+  font-size: 14px;
 }
 /*# sourceMappingURL=style.css.map */

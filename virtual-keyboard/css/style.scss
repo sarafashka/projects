@@ -43,6 +43,7 @@ body {
   width: 62px;
   height: 60px;
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
   border: 2px rgba(0, 0, 0, 0.6) solid;
@@ -51,12 +52,42 @@ body {
   box-shadow: inset 0px 3px 1px #FFFFFF;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%), #E7E7E7;
   cursor: pointer;
+  transition: 0.5s ease-in-out;
   .key__char_upper-case {
-    display: none;
+    font-size: 16px;
+
   }
 }
 .press {
   background: linear-gradient(214.02deg, #B75CFF 6.04%, #671AE4 92.95%);
   box-shadow: 0px 0px 0px;
+  transition: 1s ease-out;
   transform: scale(0.95);
+}
+.key__function {
+  font-size: 14px;
+  line-height: 17px;
+}
+.Tab, .CapsLock, .ShiftLeft {
+  align-items: start;
+  padding-left: 11px;
+}
+.Backspace, .Tab {
+  width: 97px;
+}
+.CapsLock, .Enter {
+  width: 114px;
+}
+.ShiftLeft, .ShiftRight {
+  width: 149px;
+}
+.MetaLeft, .MetaRight {
+  width: 79px;
+}
+.Space {
+  width: 342px;
+}
+.ArrowLeft, .ArrowRight, .ArrowUp, .ArrowDown {
+  height: 29px;
+  font-size: 14px;
 }

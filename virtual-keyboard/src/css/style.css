@@ -1,6 +1,6 @@
 @font-face {
   font-family: SF;
-  src: url(/virtual-keyboard/assets/fonts/sf-compact/sf-compact.otf);
+  src: url(../assets/fonts/sf-compact/sf-compact.otf);
   font-weight: 400;
 }
 

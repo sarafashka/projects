@@ -253,8 +253,8 @@ export default {
       isFunction: true,
     },
     {
-      low: '`',
-      upper: '~',
+      low: '§',
+      upper: '±',
       code: 'IntlBackslash',
       isFunction: false,
     },

@@ -115,24 +115,30 @@ export default class Keyboard {
       let symbol = button.low;
       if (this.shiftPressed && button.upper && button.low) {
         symbol = this.isCaps ? button.upper.toLowerCase() : button.upper;
-      } else {
+      } else if (!this.shiftPressed && button.upper && button.low) {
         symbol = this.isCaps ? button.low.toUpperCase() : button.low;
       }
       this.print(symbol, button);
     }
-
+    if (e.type === 'mouseup') {
+      if (e.code !== 'ShiftLeft') {
+        this.shiftPressed = false;
+        this.UpperCase();
+      }
+    }
+    if (e.type === 'keyup') {
+      if (e.code === 'ShiftLeft') {
+        this.shiftPressed = false;
+        this.UpperCase();
+      }
+    }
     if (e.type === 'keyup' || e.type === 'mouseup') {
       button.keyContainer.classList.remove('press');
-
       if (e.code === 'ControlLeft') {
         this.cntrPressed = false;
       }
       if (e.code === 'AltLeft') {
         this.altPressed = false;
-      }
-      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-        this.shiftPressed = false;
-        this.UpperCase();
       }
     }
   };

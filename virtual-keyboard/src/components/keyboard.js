@@ -8,10 +8,10 @@ const main = add('main', 'main');
 const title = add('h1', 'keyboard__title');
 title.innerHTML = 'RSS Virtual Mac Keyboard';
 const description = add('div', 'keyboard__description');
-description.innerHTML = `<p>If you want to change language press <span> control + left option </span>
-<p>(for Win <span> control + left alt </span>)</p>
-<p>There is no key "delete" on Mac keyboard, but if you want to try it's functional - use <span> right option </span></p>
-<p>(for Win <span> right alt </span>)</p>`;
+description.innerHTML = `<p>If you want to change language press <span>  control + left option  </span>
+<p>(for Win <span>  control + left alt  </span>)</p>
+<p>There is no key "delete" on Mac keyboard, but if you want to try its functionality - use <span>  right option  </span></p>
+<p>(for Win <span>  right alt  </span>)</p>`;
 main.appendChild(title);
 
 export default class Keyboard {
@@ -79,6 +79,8 @@ export default class Keyboard {
   }
 
   pressButton = (e) => {
+    console.log(e.code)
+    console.log(this.shiftPressed)
     if (e.stopPropagation) e.stopPropagation();
     if (e.preventDefault) e.preventDefault();
 
@@ -114,7 +116,7 @@ export default class Keyboard {
       }
 
       let symbol = button.low;
-      if (this.shiftPressed) {
+      if (this.shiftPressed && button.upper && button.low) {
         symbol = this.isCaps ? button.upper.toLowerCase(): button.upper;
       } else {
         symbol = this.isCaps ? button.low.toUpperCase() : button.low; 

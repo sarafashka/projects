@@ -87,7 +87,7 @@ export default class Keyboard {
 
     const button = this.keyButtons.find((el) => el.code === e.code);
 
-    if (e.type === 'keydown' || e.type === 'mousedown') {
+    if ((e.type === 'keydown' || e.type === 'mousedown') && button) {
       button.keyContainer.classList.add('press');
       if (e.code === 'CapsLock') {
         this.isCaps = this.isCaps === false;
@@ -131,7 +131,7 @@ export default class Keyboard {
         this.UpperCase();
       }
     }
-    if (e.type === 'keyup' || e.type === 'mouseup') {
+    if ((e.type === 'keyup' || e.type === 'mouseup') && button) {
       button.keyContainer.classList.remove('press');
       if (e.code === 'ControlLeft') {
         this.cntrPressed = false;

@@ -18,6 +18,7 @@ export default class Keyboard {
   constructor(layout) {
     this.layout = layout;
     this.isCaps = false;
+    this.shiftPressed = false;
     this.keyPressed = {};
   }
 
@@ -99,7 +100,7 @@ export default class Keyboard {
         this.altPressed = true;
       }
       if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-        this.shiftPressed = true;
+        this.shiftPressed = this.shiftPressed === false;
         this.UpperCase();
       }
 
@@ -121,13 +122,11 @@ export default class Keyboard {
       this.print(symbol, button);
     }
     if (e.type === 'mouseup') {
-      if (e.code !== 'ShiftLeft') {
-        this.shiftPressed = false;
-        this.UpperCase();
-      }
+      this.shiftPressed = this.shiftPressed === true;
+      this.UpperCase();
     }
     if (e.type === 'keyup') {
-      if (e.code === 'ShiftLeft') {
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
         this.shiftPressed = false;
         this.UpperCase();
       }
@@ -153,7 +152,7 @@ export default class Keyboard {
         if (button.code === 'CapsLock') {
           button.keyContainer.classList.add('uppercase');
         }
-        if (button.code === 'ShiftLeft') {
+        if (button.code === 'ShiftLeft' || button.code === 'ShiftRight') {
           button.keyContainer.classList.remove('uppercase');
         }
         if (button.low && button.upper && button.upper === button.low.toUpperCase()) {
@@ -170,7 +169,7 @@ export default class Keyboard {
         if (button.code === 'CapsLock') {
           button.keyContainer.classList.remove('uppercase');
         }
-        if (button.code === 'ShiftLeft') {
+        if (button.code === 'ShiftLeft' || button.code === 'ShiftRight') {
           button.keyContainer.classList.remove('uppercase');
         }
         if (button.low && button.upper && button.upper === button.low.toUpperCase()) {
@@ -187,7 +186,7 @@ export default class Keyboard {
         if (button.low && button.upper && button.upper === button.low.toUpperCase()) {
           newButton.char.innerHTML = button.upper;
         }
-        if (button.code === 'ShiftLeft') {
+        if (button.code === 'ShiftLeft' || button.code === 'ShiftRight') {
           button.keyContainer.classList.add('uppercase');
         }
       } else if (this.isCaps && this.shiftPressed) {
@@ -197,7 +196,7 @@ export default class Keyboard {
         if (button.code === 'CapsLock') {
           button.keyContainer.classList.add('uppercase');
         }
-        if (button.code === 'ShiftLeft') {
+        if (button.code === 'ShiftLeft' || button.code === 'ShiftRight') {
           button.keyContainer.classList.add('uppercase');
         }
         if (button.low && button.upper && button.upper !== button.low.toUpperCase()) {

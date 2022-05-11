@@ -1,0 +1,136 @@
+@font-face {
+  font-family: SF;
+  src: url(../assets/fonts/sf-compact/sf-compact.otf);
+  font-weight: 400;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: SF;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 100%;
+}
+.main {
+  width: 100vw;
+  height: 97vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.keyboard__description {
+  width: 1030px;
+  font-size: 14px;
+  line-height: 50%;
+  span {
+    text-transform: uppercase;
+    border: #671AE4 1px solid;
+  }
+}
+.keyboard__text {
+  font-family: SF;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 100%;
+  padding: 10px;
+  outline: none;
+}
+.keyboard {
+  width: 1027px;
+  height: 352px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 14.52%, rgba(255, 255, 255, 0) 87.38%), #CCCCCC;
+  box-shadow: 0px 2px 0px #848484;
+  border-radius: 12px;
+}
+.keyboard__row {
+  position: relative;
+  display: flex;
+  gap: 8px;
+} 
+.key {
+  width: 62px;
+  height: 60px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  border: 2px rgba(0, 0, 0, 0.6) solid;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 11px;
+  box-shadow: inset 0px 3px 1px #FFFFFF;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%), #E7E7E7;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.5s ease-in-out;
+  .key__char_upper-case {
+    font-size: 16px;
+
+  }
+}
+.press {
+  background: linear-gradient(214.02deg, #B75CFF 6.04%, #671AE4 92.95%);
+  box-shadow: 0px 0px 0px;
+  transition: 1s ease-out;
+  transform: scale(0.95);
+}
+.uppercase {
+  background: linear-gradient(214.02deg, #B75CFF 6.04%, #671AE4 92.95%);
+  box-shadow: 0px 0px 0px;
+  transition: 1s ease-out;
+  transform: scale(0.95);
+}
+.key__function {
+  font-size: 14px;
+  line-height: 17px;
+  justify-content: end;
+}
+.Tab, .CapsLock, .ShiftLeft {
+  align-items: start;
+  justify-content: center;
+}
+.Backspace, .Enter, .ShiftRight {
+  align-items: flex-end;
+  justify-content: center;
+}
+.Backspace, .Tab {
+  width: 97px;
+}
+.CapsLock, .Enter {
+  width: 114px;
+}
+.ShiftLeft, .ShiftRight {
+  width: 149px;
+}
+.MetaLeft, .MetaRight {
+  width: 79px;
+}
+.Space {
+  width: 342px;
+  flex-grow: 1;
+}
+.ArrowLeft, .ArrowRight, .ArrowUp, .ArrowDown {
+  height: 29px;
+  font-size: 14px;
+  padding: 5px;
+  justify-self: center;
+  margin-top: 30px;
+}
+.ArrowUp {
+  position: relative;
+  top: -30px;
+  left: 70px;
+}
+.ArrowLeft {
+  position: absolute;
+  left: 805px;
+  .key__char {
+    transform: rotate(180deg);
+  }
+}
